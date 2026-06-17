@@ -1,0 +1,360 @@
+ /* בסיס */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #faf8ef;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
+
+.game-container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 48px;
+    color: #776e65;
+    margin-bottom: 20px;
+}
+
+/* הלוח */
+.board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    gap: 15px;
+    background: #bbada0;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* כל תא */
+.cell {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    background: #cdc1b4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+    font-weight: bold;
+    color: #776e65;
+    transition: background 0.3s, color 0.3s;
+}
+
+
+
+
+/* --- עיצוב אזור הניקוד בלבד --- */
+
+/* עטיפה לכותרת ולניקוד כדי שיעמדו בשורה אחת */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 445px; /* תואם לרוחב הלוח שלך */
+    margin: 0 auto 20px auto;
+}
+
+/* מיכל התיבות של הניקוד */
+.scores-wrapper {
+    display: flex;
+    gap: 8px;
+}
+
+/* עיצוב התיבה עצמה (הריבוע החום) */
+.score-box {
+    background: #bbada0;
+    padding: 5px 20px;
+    border-radius: 6px;
+    min-width: 70px;
+    text-align: center;
+    color: white;
+}
+
+/* הכיתוב הקטן: "ניקוד" או "שיא" */
+.score-box .label {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #eee4da;
+    font-weight: bold;
+    display: block;
+    margin-bottom: -2px;
+}
+
+/* המספר עצמו שמתעדכן מה-JS */
+.score-box #current-score, 
+.score-box #best-score {
+    font-size: 25px;
+    font-weight: bold;
+    display: block;
+}
+
+/* התאמה של ה-H1 כדי שלא יתפוס את כל השורה */
+h1 {
+    margin: 0;
+    font-size: 55px;
+    color: #776e65;
+}
+
+
+
+/* --- עיצוב כפתור משחק חדש בלבד --- */
+
+.restart-btn {
+    background: #8f7a66;    /* הצבע החום הקלאסי של כפתורי 2048 */
+    color: #f9f6f2;         /* צבע טקסט בהיר מאוד */
+    border: none;           /* הסרת המסגרת ברירת המחדל */
+    border-radius: 5px;     /* פינות מעוגלות כמו התאים */
+    padding: 10px 20px;     /* מרווח פנימי לטקסט */
+    font-size: 18px;        /* גודל טקסט קריא */
+    font-weight: bold;      /* טקסט בולט */
+    cursor: pointer;        /* סימן של יד במעבר עכבר */
+    margin-top: 20px;       /* מרווח מהלוח */
+    font-family: inherit;   /* שימוש באותו פונט של הדף */
+    transition: background-color 0.2s ease; /* אנימציה עדינה בלחיצה */
+}
+
+.restart-btn:hover {
+    background: #7f6a56;    /* צבע מעט כהה יותר כשעוברים עם העכבר */
+}
+
+.restart-btn:active {
+    transform: scale(0.95); /* אפקט קטן של "לחיצה" כשלוחצים פיזית */
+}
+
+/* // --- עיצוב כפתור חזרה לתפריט בלבד --- */
+.btn-back {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #4a4a4a; /* צבע טקסט אפור כהה מעודן */
+    background-color: hsl(180, 55%, 80%); /* טורקיז תואם לאריח 2 */
+    border: none;
+    border-radius: 8px; /* פינות מעוגלות */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* צל עדין שנותן עומק */
+    transition: all 0.3s ease; /* אנימציה חלקה לשינויים */
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* אפקט כשמעבירים את העכבר על הכפתור */
+.btn-back:hover {
+    background-color: hsl(180, 60%, 70%); /* צבע מעט כהה יותר */
+    transform: translateY(-2px); /* הכפתור "קופץ" מעט למעלה */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* הצל גדל */
+}
+
+/* אפקט בזמן הלחיצה עצמה */
+.btn-back:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.score-box {
+    background-color: #bbada0; /* או כל צבע שמתאים לשאר התיבות שלך */
+    padding: 10px 20px;
+    border-radius: 6px;
+    min-width: 80px;
+    text-align: center;
+    color: white;
+}
+
+#game-timer {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.label {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #eee4da;
+}
+
+
+/* --- רספונסיביות למובייל --- */
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 38px; /* הקטנת הכותרת */
+    }
+
+    .header {
+        max-width: 320px; /* צמצום רוחב הכותרת והניקוד */
+    }
+
+    /* הקטנת הלוח */
+    .board {
+        grid-template-columns: repeat(4, 70px); /* תאים קטנים יותר */
+        grid-template-rows: repeat(4, 70px);
+        gap: 10px;
+        padding: 10px;
+    }
+
+    /* הקטנת התאים והטקסט בתוכם */
+    .cell {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+    }
+
+    .score-box {
+        min-width: 60px;
+        padding: 5px 10px;
+    }
+
+    .score-box #current-score, 
+    .score-box #best-score {
+        font-size: 18px;
+    }
+}
+
+
+
+/* שכבת הרקע שמכסה את כל המסך */
+.overlay {
+    display: none; /* מוסתר כברירת מחדל */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* שקיפות כהה */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* כרטיס התוצאות */
+.modal-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    position: relative;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease-out; /* אנימציה עדינה בכניסה */
+}
+
+/* כפתור ה-X לסגירה */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+}
+
+.close-btn:hover { color: #000; }
+
+/* עיצוב כפתור "שחק שוב" */
+.retry-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+@keyframes fadeIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+
+
+.win-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px); /* טשטוש עדין לרקע */
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.win-card {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 20px rgba(255, 215, 0, 0.2);
+    border: 3px solid #ffd700; /* מסגרת זהב */
+    position: relative;
+    max-width: 350px;
+    /* אנימציית כניסה: קפיצה וסיבוב עדין */
+    animation: winPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes winPop {
+    0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.win-title {
+    color: #d4af37;
+    font-size: 2rem;
+    margin: 10px 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.confetti-icon {
+    font-size: 50px;
+    margin-bottom: -10px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.win-btn {
+    background: #ffd700;
+    background: linear-gradient(to bottom, #ffd700, #ffb900);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 185, 0, 0.4);
+    transition: transform 0.2s;
+}
+
+.win-btn:hover { transform: scale(1.05); }
+
+.close-x {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #aaa;
+}
