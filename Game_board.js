@@ -22,11 +22,11 @@ let scorecurrent = 0;
 let currentuser = JSON.parse(sessionStorage.getItem("current_user"));
 let scoremax = currentuser ? currentuser.score : 0;
 
-// בדיקה: אם אין משתמש מחובר, שלח אותו לדף ההתחברות
-if (!currentuser) {
-    alert("אין משתמש מחובר. אנא התחבר כדי לשחק.");
-    window.location.href = "/log in/login.html"; 
-}
+// // בדיקה: אם אין משתמש מחובר, שלח אותו לדף ההתחברות
+// if (!currentuser) {
+//     alert("אין משתמש מחובר. אנא התחבר כדי לשחק.");
+//     window.location.href = "/log in/login.html"; 
+// }
 
 
 let currentMat =[ [0, 0, 0, 0],
